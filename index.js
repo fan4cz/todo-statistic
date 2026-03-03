@@ -19,6 +19,14 @@ function processCommand(command) {
         case 'show':
             console.log(getAllTODO());
             break;
+        case 'important' :
+            break;
+        case 'user' :
+            const username = parts.slice(1).join(' ');
+            const todos = getAllTODO();
+            break;
+        case 'sort' :
+            break
         default:
             console.log('wrong command');
             break;
