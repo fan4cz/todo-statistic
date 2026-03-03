@@ -44,7 +44,8 @@ function processCommand(command) {
         case 'sort':
             switch (sortType) {
                 case 'date':
-                    
+                    const todo = getAllTODO();
+                    console.log(dateSorting(todo));
                     break;
                 case 'user':
                     break;
@@ -59,6 +60,8 @@ function processCommand(command) {
             break;
     }
 }
+
+// TODO you can do it!
 
 function getAllTODO(isImportant) {
     const regex = /^\s*\/\/ TODO([^\n]*)/gm;
@@ -87,4 +90,35 @@ function extractDateFromTodo(todoText) {
     const regex = /\/\/\s*TODO\s*([^;]+);\s*([^;]+);\s*(.*)/;
     const match = todoText.match(regex);
     return match ? match[2].trim() : null;
+}
+
+function dateSorting(todos) {
+    const sorted = [...todos].sort((a, b) => {
+        const dateAStr = extractDateFromTodo(a);
+        const dateBStr = extractDateFromTodo(b);
+        
+        const parseDate = (dateStr) => {
+            if (!dateStr) return null;
+            const timestamp = Date.parse(dateStr);
+            return isNaN(timestamp) ? null : timestamp;
+        };
+        
+        const tsA = parseDate(dateAStr);
+        const tsB = parseDate(dateBStr);
+        
+        if (tsA !== null && tsB !== null) {
+            return tsB - tsA;
+        } else if (tsA !== null) {
+            return -1;
+        } else if (tsB !== null) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    return sorted;
+}
+
+function userSorted(todo) {
+    
 }
