@@ -33,23 +33,30 @@ function processCommand(command) {
         case 'important':
             console.log(getAllTODO(true));
             break;
-        case 'user':            
+        case 'user':
             const todos = getAllTODO();
             for (let i = 0; i < todos.length; i++) {
                 if (extractAuthorFromTodo(todos[i]).toLowerCase() === username.toLowerCase()) {
                     console.log(todos[i]);
-                }  
+                }
             }
             break;
         case 'sort':
             switch (sortType) {
                 case 'date':
-                    
+
                     break;
                 case 'user':
                     break;
                 case 'importance':
-                    break;   
+                    const todos = getAllTODO();
+                    todos.sort((str1, str2) => {
+                        const cnt1 = str1.split("!").length - 1;
+                        const cnt2 = str2.split("!").length - 1;
+                        return cnt2 - cnt1;
+                    });
+                    console.log(todos)
+                    break;
                 default:
                     break;
             }
