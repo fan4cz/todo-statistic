@@ -1,5 +1,5 @@
-const {getAllFilePathsWithExtension, readFile} = require('./fileSystem');
-const {readLine} = require('./console');
+const { getAllFilePathsWithExtension, readFile } = require('./fileSystem');
+const { readLine } = require('./console');
 
 const files = getFiles();
 
@@ -17,15 +17,23 @@ function processCommand(command) {
             process.exit(0);
             break;
         case 'show':
-
+            console.log(getAllTODO());
+            break;
         default:
             console.log('wrong command');
             break;
     }
 }
 
-// TODO you can do it!
 function getAllTODO() {
-    
-}
+    const regex = /^\s*\/\/ TODO([^\n]*)/gm;
 
+    let result = []
+    for (const file of files) {
+        const matches = [...file.matchAll(regex)];
+        for (const match of matches) {
+            result.push(match[0].trim());
+        }
+    }
+    return result;
+}
