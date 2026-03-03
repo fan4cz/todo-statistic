@@ -12,6 +12,12 @@ function getFiles() {
 }
 
 function processCommand(command) {
+
+    if (command.startsWith('user ')) {
+        username = command.slice(5).trim();
+        command = 'user';
+    }
+
     switch (command) {
         case 'exit':
             process.exit(0);
@@ -22,9 +28,13 @@ function processCommand(command) {
         case 'important':
             console.log(getAllTODO(true));
             break;
-        case 'user':
-            const username = parts.slice(1).join(' ');
+        case 'user':            
             const todos = getAllTODO();
+            for (let i = 0; i < todos.length; i++) {
+                if (extractAuthorFromTodo(todos[i]).toLowerCase() === username.toLowerCase()) {
+                    console.log(todos[i]);
+                }  
+            }
             break;
         case 'sort':
             break
@@ -49,4 +59,10 @@ function getAllTODO(isImportant) {
         result = result.filter(todo => todo.includes("!"));
     }
     return result;
+}
+
+function extractAuthorFromTodo(todoText) {
+    const regex = /\/\/\s*TODO\s*([^;]+);\s*([^;]+);\s*(.*)/;
+    const match = todoText.match(regex);
+    return match ? match[1].trim() : null;
 }
