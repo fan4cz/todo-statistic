@@ -128,17 +128,29 @@ function dateSorting(todos) {
 }
 
 function userSorted(todos) {
-    sorted = []    
+    let dict = {} 
     for (let i = 0; i < todos.length; i++) {
-        if (extractAuthorFromTodo(todos[i]).toLowerCase() !== null) {
-            sorted.push(todos[i]);
+        author = extractAuthorFromTodo(todos[i]);
+        if (author != null && author.toLowerCase().toLowerCase() !== null) {
+            // sorted.push(todos[i]);
+            if (author.toLowerCase() in dict){
+                dict[author.toLowerCase()].push(todos[i]);
+            }else{
+                dict[author.toLowerCase()] = [todos[i]];
+            }
         }
     }
 
     for (let i = 0; i < todos.length; i++) {
-        if (extractAuthorFromTodo(todos[i]).toLowerCase() === null) {
-            sorted.push(todos[i]);
+        author = extractAuthorFromTodo(todos[i]);
+        if (author === null) {
+            // sorted.push(todos[i]);
+            if ('' in dict){
+                dict[''].push(todos[i]);
+            }else{
+                dict[''] = [todos[i]];
+            }
         }
     }
-    return sorted;
+    return dict;
 }
