@@ -35,11 +35,12 @@ function processCommand(command) {
             break;
         case 'user':
             const todos = getAllTODO();
-            for (let i = 0; i < todos.length; i++) {
-                if (extractAuthorFromTodo(todos[i]).toLowerCase() === username.toLowerCase()) {
-                    console.log(todos[i]);
+            todos.forEach(todo => {
+                author = extractAuthorFromTodo(todo);
+                if (author != null && author.toLowerCase() === username.toLowerCase()) {
+                    console.log(todo);
                 }
-            }
+            });
             break;
         case 'sort':
             switch (sortType) {                
@@ -103,16 +104,16 @@ function dateSorting(todos) {
     const sorted = [...todos].sort((a, b) => {
         const dateAStr = extractDateFromTodo(a);
         const dateBStr = extractDateFromTodo(b);
-        
+
         const parseDate = (dateStr) => {
             if (!dateStr) return null;
             const timestamp = Date.parse(dateStr);
             return isNaN(timestamp) ? null : timestamp;
         };
-        
+
         const tsA = parseDate(dateAStr);
         const tsB = parseDate(dateBStr);
-        
+
         if (tsA !== null && tsB !== null) {
             return tsB - tsA;
         } else if (tsA !== null) {
