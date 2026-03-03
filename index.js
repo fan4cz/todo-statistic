@@ -23,6 +23,12 @@ function processCommand(command) {
         command = 'sort';
     }
 
+    let date;
+    if (command.startsWith('date ')) {
+        date = command.slice(5).trim();
+        command = 'date';
+    }
+
     switch (command) {
         case 'exit':
             process.exit(0);
@@ -63,6 +69,19 @@ function processCommand(command) {
                     break;
             }
             break
+        case 'date':
+            let parts = date.split('-').map(part => +part);
+            if(parts.length == 1){
+                parts.push(1);
+                parts.push(1);
+            }else if(parts.length == 2){
+                parts.push(1);
+            }
+            let day = new Date(parts[0], parts[1], parts[2]);
+            let dates = dateSorting(getAllTODO());
+            dates = dates.filter(d => new Date(extractDateFromTodo(d)) > day);
+            console.log(dates);
+            break;
         default:
             console.log('wrong command');
             break;
