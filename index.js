@@ -16,6 +16,8 @@ function processCommand(command) {
         case 'exit':
             process.exit(0);
             break;
+        case 'show':
+
         default:
             console.log('wrong command');
             break;
@@ -23,3 +25,7 @@ function processCommand(command) {
 }
 
 // TODO you can do it!
+function getAllTODO() {
+    
+}
+
