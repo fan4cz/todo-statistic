@@ -90,8 +90,14 @@ function processCommand(command) {
 
 // TODO you can do it!
 
+// ToDo: you can do it!
+
+// todoyou can do it!
+
+//todoyou can do it!
+
 function getAllTODO(isImportant) {
-    const regex = /^\s*\/\/ TODO([^\n]*)/gm;
+    const regex = /^\s*\/\/\s*TODO\s*:?\s*([^\n]*)/gmi;
 
     let result = []
     for (const file of files) {
