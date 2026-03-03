@@ -43,8 +43,8 @@ function processCommand(command) {
             });
             break;
         case 'sort':
-            switch (sortType) {                
-                case 'date':    
+            switch (sortType) {
+                case 'date':
                     console.log(dateSorting(getAllTODO()));
                     break;
                 case 'user':
@@ -128,29 +128,28 @@ function dateSorting(todos) {
 }
 
 function userSorted(todos) {
-    let dict = {} 
-    for (let i = 0; i < todos.length; i++) {
-        author = extractAuthorFromTodo(todos[i]);
+    let dict = {}
+    todos.forEach(todo => {
+        author = extractAuthorFromTodo(todo);
         if (author != null && author.toLowerCase().toLowerCase() !== null) {
-            // sorted.push(todos[i]);
-            if (author.toLowerCase() in dict){
-                dict[author.toLowerCase()].push(todos[i]);
-            }else{
-                dict[author.toLowerCase()] = [todos[i]];
+            if (author.toLowerCase() in dict) {
+                dict[author.toLowerCase()].push(todo);
+            } else {
+                dict[author.toLowerCase()] = [todo];
             }
         }
-    }
+    });
 
-    for (let i = 0; i < todos.length; i++) {
-        author = extractAuthorFromTodo(todos[i]);
+    todos.forEach(todo => {
+        author = extractAuthorFromTodo(todo);
         if (author === null) {
-            // sorted.push(todos[i]);
-            if ('' in dict){
-                dict[''].push(todos[i]);
-            }else{
-                dict[''] = [todos[i]];
+            if ('' in dict) {
+                dict[''].push(todo);
+            } else {
+                dict[''] = [todo];
             }
         }
-    }
+    });
+
     return dict;
 }
