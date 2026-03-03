@@ -19,13 +19,14 @@ function processCommand(command) {
         case 'show':
             console.log(getAllTODO());
             break;
-        case 'important' :
+        case 'important':
+            console.log(getAllTODO(true));
             break;
-        case 'user' :
+        case 'user':
             const username = parts.slice(1).join(' ');
             const todos = getAllTODO();
             break;
-        case 'sort' :
+        case 'sort':
             break
         default:
             console.log('wrong command');
@@ -33,7 +34,7 @@ function processCommand(command) {
     }
 }
 
-function getAllTODO() {
+function getAllTODO(isImportant) {
     const regex = /^\s*\/\/ TODO([^\n]*)/gm;
 
     let result = []
@@ -42,6 +43,10 @@ function getAllTODO() {
         for (const match of matches) {
             result.push(match[0].trim());
         }
+    }
+
+    if (isImportant) {
+        result = result.filter(todo => todo.includes("!"));
     }
     return result;
 }
