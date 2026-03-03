@@ -42,12 +42,12 @@ function processCommand(command) {
             }
             break;
         case 'sort':
-            switch (sortType) {
-                case 'date':
-                    const todo = getAllTODO();
-                    console.log(dateSorting(todo));
+            switch (sortType) {                
+                case 'date':    
+                    console.log(dateSorting(getAllTODO()));
                     break;
                 case 'user':
+                    console.log(userSorted(getAllTODO()));
                     break;
                 case 'importance':
                     const todos = getAllTODO();
@@ -126,6 +126,18 @@ function dateSorting(todos) {
     return sorted;
 }
 
-function userSorted(todo) {
-    
+function userSorted(todos) {
+    sorted = []    
+    for (let i = 0; i < todos.length; i++) {
+        if (extractAuthorFromTodo(todos[i]).toLowerCase() !== null) {
+            sorted.push(todos[i]);
+        }
+    }
+
+    for (let i = 0; i < todos.length; i++) {
+        if (extractAuthorFromTodo(todos[i]).toLowerCase() === null) {
+            sorted.push(todos[i]);
+        }
+    }
+    return sorted;
 }
