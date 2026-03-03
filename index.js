@@ -18,6 +18,11 @@ function processCommand(command) {
         command = 'user';
     }
 
+    if (command.startsWith('sort ')) {
+        sortType = command.slice(5).trim();
+        command = 'sort';
+    }
+
     switch (command) {
         case 'exit':
             process.exit(0);
@@ -37,6 +42,17 @@ function processCommand(command) {
             }
             break;
         case 'sort':
+            switch (sortType) {
+                case 'date':
+                    
+                    break;
+                case 'user':
+                    break;
+                case 'importance':
+                    break;   
+                default:
+                    break;
+            }
             break
         default:
             console.log('wrong command');
@@ -65,4 +81,10 @@ function extractAuthorFromTodo(todoText) {
     const regex = /\/\/\s*TODO\s*([^;]+);\s*([^;]+);\s*(.*)/;
     const match = todoText.match(regex);
     return match ? match[1].trim() : null;
+}
+
+function extractDateFromTodo(todoText) {
+    const regex = /\/\/\s*TODO\s*([^;]+);\s*([^;]+);\s*(.*)/;
+    const match = todoText.match(regex);
+    return match ? match[2].trim() : null;
 }
